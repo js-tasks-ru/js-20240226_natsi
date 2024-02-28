@@ -5,15 +5,13 @@
  */
 export function createGetter(path) {
     return (obj) => {
-        let propValue = obj;
-        if (path.length > 0) {
-            const props = path.split('.');
-            for (let i = 0; i < props.length; i++) {
-                if (typeof propValue !== 'undefined') {
-                    propValue = propValue[props[i]];
-                }
-            }
+        const props = path.split('.');
+        let newObject = obj;
+        for (let i = 0; i < props.length; i++) {
+            if (newObject !== null && typeof newObject === 'object' && !Object.hasOwn(newObject, props[i])) return;
+
+            newObject = newObject?.[props[i]];
         }
-        return propValue;
+        return newObject;
     }
 }
