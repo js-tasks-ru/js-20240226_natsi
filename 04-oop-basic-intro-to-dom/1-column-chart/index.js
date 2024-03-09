@@ -19,7 +19,6 @@ export default class ColumnChart {
 
   update(newData) {
     this.data = newData;
-    console.log(document.querySelector('.column-chart__chart'));
     document.querySelector('.column-chart__chart').innerHTML = this.createColumTemplate();
   }
 
