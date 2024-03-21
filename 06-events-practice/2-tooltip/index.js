@@ -46,8 +46,8 @@ class Tooltip {
 
   documentPointermoveHandler = (event) => {
     if (event.target.dataset.tooltip) {
-      this.element.style.left = event.pageX + 'px';
-      this.element.style.top = event.pageY + 'px';
+      this.element.style.left = event.pageX + 10 + 'px';
+      this.element.style.top = event.pageY + 10 + 'px';
     }
   }
 
