@@ -35,7 +35,7 @@ export default class ColumnChartV2 extends ColumnChartV1 {
   async fetchRequest(from, to) {
     this.url.searchParams.set('from', from);
     this.url.searchParams.set('to', to);
-    const response = await fetchJson(this.url, this.url.searchParams);
+    const response = await fetchJson(this.url);
     return response;
   }
 } 
