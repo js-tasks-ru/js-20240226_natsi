@@ -1,3 +1,5 @@
+import { selectSubElements } from './utils/getSubElements.js';
+
 export default class ColumnChart {
   element;
   chartHeight = 50;
@@ -15,18 +17,22 @@ export default class ColumnChart {
     this.formatHeading = formatHeading;
 
     this.element = this.createElement();
+    this.subElements = selectSubElements(this.element);
   }
 
   update(newData) {
     this.data = newData;
-    document.querySelector('.column-chart__chart').innerHTML = this.createColumTemplate();
+    this.subElements['body'].innerHTML = this.createColumTemplate();
+    this.subElements['header'].innerHTML = this.formatHeading(this.value);
   }
 
   getColumnProps() {
     const maxValue = Math.max(...this.data);
     const scale = 50 / maxValue;
-  
+    this.value = 0;
+
     return this.data.map(item => {
+      this.value += item;
       return {
         percent: (item / maxValue * 100).toFixed(0) + '%',
         value: String(Math.floor(item * scale))
@@ -41,8 +47,8 @@ export default class ColumnChart {
   }
 
   createTemplate() {
-    return `<div class="${this.createChartClass()}" style="--chart-height: ${this.chartHeight}">
-      <div class="column-chart__title">
+    return `<div data-element="chart" class="${this.createChartClass()}" style="--chart-height: ${this.chartHeight}">
+      <div data-element="title" class="column-chart__title">
         ${this.label}
         ${this.createLinkTemplate()}
       </div>
