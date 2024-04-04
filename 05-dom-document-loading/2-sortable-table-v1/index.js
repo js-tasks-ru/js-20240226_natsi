@@ -29,7 +29,7 @@ export default class SortableTable {
 
   createTableTemplate() {
     return `<data-element="productsContainer" class="products-list__container">
-      <div class="sortable-table">
+      <div data-element="sortableTable"  class="sortable-table">
       <div data-element="header" class="sortable-table__header sortable-table__row">
       </div>
       <div data-element="body" class="sortable-table__body">
@@ -84,8 +84,8 @@ export default class SortableTable {
   sort(sortField, sortOrder) {
     this.sortField = sortField;
     this.sortOrder = sortOrder;
-
-    const currentHeader = this.headerConfig.find(header => header.id === this.sortField);
+    
+    const currentHeader = this.headerConfig.find(header => header.id === sortField);
 
     const sortedData = this.data.sort((firstRow, secondRow) => {
       const order = sortOrder === 'asc' ? 1 : -1;
@@ -97,6 +97,17 @@ export default class SortableTable {
       }
       return order * (firstValue - secondValue);
     }); 
+
+    this.updateTemplate(sortedData, sortField, sortOrder);
+  }
+
+  update(newDate) {
+    this.data = newDate;
+  }
+
+  updateTemplate(sortedData, sortField, sortOrder) {
+    this.sortField = sortField;
+    this.sortOrder = sortOrder;
 
     this.subElements.header.innerHTML = this.createHeaderTemplate();
     this.subElements.body.innerHTML = this.createBodyTemplate(sortedData);
